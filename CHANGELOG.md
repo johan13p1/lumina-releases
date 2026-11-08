@@ -4,6 +4,11 @@
 
 Die zweite Zahl steigt nur bei großen Updates, sonst zählt die dritte hoch. 1.4.0 bis 1.8.4 heißen deshalb jetzt 1.3.1 bis 1.3.21.
 
+## 1.3.28
+
+- New: Right Shift > Lumina Settings > Lumina Online. Turned off, nothing is sent to Lumina's server (and you don't see other players' capes either). The installer asks once.
+- The Coordinates, Zoom and Name Tags icons are Lumina's own now.
+
 ## 1.3.27
 
 New installs start cleaner: FPS, CPS and Coordinates are off, and the chat has no background. Your own settings stay as they are.

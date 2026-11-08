@@ -47,7 +47,7 @@
 ## Install
 
 1. Download `LuminaClient-Setup-<version>.exe` from the [latest release](https://github.com/johan13p1/lumina-releases/releases/latest) and run it.
-2. The installer is not signed, so Windows may say "Windows protected your PC". Click **More info**, then **Run anyway**.
+2. If Windows says "Windows protected your PC", click **More info**, then **Run anyway**.
 3. Sign in with your Microsoft account (Minecraft: Java Edition) and press **Play**. The first start downloads Minecraft, Java and the mods, which takes a minute or two.
 
 The launcher keeps itself up to date. Your worlds, mods and settings stay.
@@ -61,16 +61,25 @@ Lumina is open source under the [MIT License](LICENSE).
 | `mod/`, `mod-26.2/`, `mod-26.3/` | The Fabric mod, one project per Minecraft version (Java) |
 | `launcher/` | The launcher (Electron) |
 
-`.\build.ps1` builds the three mods and the installer. On the first run it downloads JDK 21, JDK 25 and Node.js into `.tools\`. `.\build.ps1 -SkipInstaller` only builds the mods.
+`.\build.ps1` builds the three mods and the installer. On the first run it downloads JDK 21, JDK 25 and Node.js into `.tools\`. `.\build.ps1 -SkipInstaller` only builds the mods. Releases are built from this repository by GitHub Actions (`.github/workflows/release.yml`) when a version tag is pushed.
 
-Issues and pull requests are welcome. Icons, fonts and other files by others keep their own licenses, see Credits.
+Issues and pull requests are welcome. Fonts and other files by others keep their own licenses, see Credits.
 
 ## Privacy
 
-To show your cape, particles and the Lumina mark to other players, Lumina's server stores your Minecraft name, UUID, what you wear and when you last played. Your Microsoft sign-in is never sent to Lumina's server, and Lumina keeps no IP addresses and no logs.
+Lumina Online shows your cape, particles and the Lumina mark to other Lumina players. For this, Lumina's server stores your Minecraft name, UUID, what you wear and when you last played. You can turn it off in the installer or under Right Shift > Lumina Settings > Lumina Online. Your Microsoft sign-in is never sent to Lumina's server, and Lumina keeps no IP addresses and no logs. Full privacy policy: [PRIVACY.md](PRIVACY.md).
+
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
+
+- Committers and reviewers: [johan13p1](https://github.com/johan13p1)
+- Approvers: [johan13p1](https://github.com/johan13p1)
+
+Every release is built from this repository by GitHub Actions, and each signing request is approved by hand. Privacy policy: [PRIVACY.md](PRIVACY.md).
 
 ## Credits
 
-Menu icons for Coordinates, Zoom and Name Tags from [Faithful 32x](https://faithfulpack.net/). Font [Outfit](https://fonts.google.com/specimen/Outfit) (SIL Open Font License), icons [Lucide](https://lucide.dev/) (ISC), 3D skin viewer [skinview3d](https://github.com/bs-community/skinview3d) (MIT). Wavey Capes by tr7zw and the other mods are downloaded from Modrinth and not bundled.
+Font [Outfit](https://fonts.google.com/specimen/Outfit) (SIL Open Font License), icons [Lucide](https://lucide.dev/) (ISC), 3D skin viewer [skinview3d](https://github.com/bs-community/skinview3d) (MIT). Wavey Capes by tr7zw and the other mods are downloaded from Modrinth and not bundled.
 
 Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.

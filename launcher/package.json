@@ -1,7 +1,7 @@
 {
   "name": "lumina-launcher",
   "productName": "LuminaClient",
-  "version": "1.3.27",
+  "version": "1.3.28",
   "description": "LuminaClient - a clean, minimal and fast Minecraft client launcher.",
   "author": "Lumina",
   "license": "MIT",

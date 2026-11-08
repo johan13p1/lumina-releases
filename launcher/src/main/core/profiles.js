@@ -347,4 +347,29 @@ async function select(id) {
   return list();
 }
 
-module.exports = { VERSIONS, DEFAULT_ID, list, get, create, rename, remove, select, markPlayed, modsDir, manifestFile, gameDir, coreModsDir, ensureGameDir, ensureExtraGameDir, luminaDir, ensureLuminaDir, shareAll };
+/**
+ * The installer's privacy page leaves launcher/install-options.json when "Lumina Online" was
+ * unticked. Its choice goes into Lumina's settings (Lumina Settings > Lumina Online) once; the
+ * game then sends nothing to Lumina's server. Later changes happen in the game's menu.
+ */
+async function applyInstallOptions() {
+  const file = path.join(paths.data, 'install-options.json');
+  const options = await readJson(file, null);
+  if (!options) return;
+  if (options.online === false) {
+    const dirs = [await ensureLuminaDir(false)];
+    if (await exists(luminaDir(true))) dirs.push(luminaDir(true));
+    for (const dir of dirs) {
+      const configFile = path.join(dir, 'config.json');
+      const config = await readJson(configFile, { version: 1, modules: {}, ui: {} });
+      config.modules = config.modules || {};
+      const client = (config.modules.client = config.modules.client || { enabled: true, settings: {} });
+      client.settings = client.settings || {};
+      client.settings.online = false;
+      await writeJson(configFile, config);
+    }
+  }
+  await fsp.rm(file, { force: true });
+}
+
+module.exports = { VERSIONS, DEFAULT_ID, list, get, create, rename, remove, select, markPlayed, modsDir, manifestFile, gameDir, coreModsDir, ensureGameDir, ensureExtraGameDir, luminaDir, ensureLuminaDir, shareAll, applyInstallOptions };

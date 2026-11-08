@@ -5,7 +5,6 @@
 	"name": "Lumina Client",
 	"description": "A clean, minimal and fast Minecraft client.",
 	"authors": ["Lumina"],
-	"contributors": ["Faithful 32x, https://faithfulpack.net/ (menu icons for Coordinates, Zoom and Name Tags)"],
 	"license": "MIT",
 	"icon": "assets/lumina/icon.png",
 	"environment": "client",

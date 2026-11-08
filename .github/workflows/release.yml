@@ -1,0 +1,73 @@
+# Builds Lumina from this repository and publishes the release when a version tag is pushed
+# (git tag v1.3.28 && git push origin v1.3.28). The installer is signed through SignPath once the
+# repository variables SIGNPATH_ORGANIZATION_ID, SIGNPATH_PROJECT_SLUG, SIGNPATH_SIGNING_POLICY_SLUG
+# and the secret SIGNPATH_API_TOKEN are set; until then the release is unsigned.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the mods and the installer
+        shell: pwsh
+        run: |
+          $version = '${{ github.ref_name }}'.TrimStart('v')
+          "VERSION=$version" >> $env:GITHUB_ENV
+          .\build.ps1 -Version $version
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+
+      - name: Upload the unsigned installer
+        id: unsigned
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-unsigned
+          path: launcher/dist/LuminaClient-Setup-${{ env.VERSION }}.exe
+          if-no-files-found: error
+
+      - name: Sign with SignPath
+        if: vars.SIGNPATH_ORGANIZATION_ID != ''
+        uses: signpath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          github-artifact-id: ${{ steps.unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: signed
+
+      - name: Use the signed installer
+        if: vars.SIGNPATH_ORGANIZATION_ID != ''
+        shell: pwsh
+        run: Copy-Item "signed\LuminaClient-Setup-$env:VERSION.exe" 'launcher\dist\' -Force
+
+      # installed launchers read latest.yml; it must describe the file that is actually released
+      - name: Write latest.yml for auto updates
+        shell: pwsh
+        run: |
+          $exe = "launcher\dist\LuminaClient-Setup-$env:VERSION.exe"
+          $bytes = [IO.File]::ReadAllBytes((Resolve-Path $exe))
+          $sha = [Convert]::ToBase64String([Security.Cryptography.SHA512]::Create().ComputeHash($bytes))
+          $name = Split-Path $exe -Leaf
+          $date = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
+          $yml = @("version: $env:VERSION", 'files:', "  - url: $name", "    sha512: $sha", "    size: $($bytes.Length)", "path: $name", "sha512: $sha", "releaseDate: '$date'", '') -join "`n"
+          [IO.File]::WriteAllText((Join-Path $PWD 'launcher\dist\latest.yml'), $yml)
+
+      - name: Publish the release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $notes = if (Test-Path 'launcher\build\release-notes.md') { Get-Content 'launcher\build\release-notes.md' -Raw } else { '' }
+          $notes += "`n`n[Code signing policy](https://github.com/${{ github.repository }}#code-signing-policy) · [Privacy](https://github.com/${{ github.repository }}/blob/main/PRIVACY.md)"
+          [IO.File]::WriteAllText((Join-Path $PWD 'notes.md'), $notes)
+          gh release create '${{ github.ref_name }}' "launcher\dist\LuminaClient-Setup-$env:VERSION.exe" 'launcher\dist\latest.yml' --title "Lumina $env:VERSION" --notes-file notes.md --verify-tag

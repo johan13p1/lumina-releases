@@ -40,7 +40,8 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Lumina's own server: it tells other Lumina players that you use Lumina and what you wear, and it
- * says which players around you use Lumina. There is no way to opt out, by design.
+ * says which players around you use Lumina. Lumina Settings > Lumina Online turns it off; then
+ * nothing at all is sent (the installer asks once too).
  *
  * <p>Sign-in uses the player key Mojang gives every account (signed chat): the game signs Lumina's
  * challenge with it, and the server checks that signature and Mojang's signature on the key. No
@@ -104,6 +105,18 @@ public final class LuminaOnline {
 	private LuminaOnline() {
 	}
 
+	private static void forget() {
+		user = null;
+		token = null;
+		tokenFor = null;
+		synced = null;
+		syncedAt = 0;
+		failures = 0;
+		pauseUntil = 0;
+		known.clear();
+		pending.clear();
+	}
+
 	private static String apiUrl() {
 		String url = System.getProperty("lumina.api", "https://lumina-api.lumina-cc1.workers.dev");
 		return url.endsWith("/") ? url.substring(0, url.length() - 1) : url;
@@ -135,6 +148,12 @@ public final class LuminaOnline {
 
 	public static void tick(Minecraft mc) {
 		if (!ENABLED) return;
+		var settings = Lumina.settings();
+		if (settings == null || !settings.online.on()) {
+			// switched off: forget everything; nothing is sent until it is on again
+			if (user != null) forget();
+			return;
+		}
 		long now = Util.getMillis();
 		UUID id = mc.getUser().getProfileId();
 		if (!id.equals(user)) {

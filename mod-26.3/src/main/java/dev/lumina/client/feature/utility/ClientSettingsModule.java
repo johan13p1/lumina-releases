@@ -14,6 +14,7 @@ public final class ClientSettingsModule extends Module {
 	public final BoolSetting inventoryWatermark;
 	public final BoolSetting sharpUi;
 	public final BoolSetting retina;
+	public final BoolSetting online;
 
 	public ClientSettingsModule() {
 		super("client", "Lumina Settings", "General client options", Category.UTILITY, Icons.SETTINGS, true);
@@ -22,6 +23,9 @@ public final class ClientSettingsModule extends Module {
 		inventoryWatermark = add(new BoolSetting("inventory_watermark", "Lumina Mark In Inventories", true));
 		add(new HeaderSetting("HUD"));
 		hideInDebug = add(new BoolSetting("hide_in_debug", "Hide HUD With F3", true));
+		add(new HeaderSetting("Online"));
+		online = add(new BoolSetting("online", "Lumina Online", true)
+			.describe("Shows your cape, particles and the Lumina mark to other Lumina players, and theirs to you. Sends your Minecraft name, UUID and what you wear to Lumina's server. Off: nothing is sent."));
 		add(new HeaderSetting("Mac").visibleWhen(() -> MacOS.IS_MAC));
 		sharpUi = add(new BoolSetting("sharp_ui", "Sharp Menus & HUD (Needs Restart)", true)
 			.describe("Draws menus, HUD and text at the full Retina resolution; the world keeps the faster resolution. Costs about 1 ms per frame, off gives the most FPS. Applies after a restart.")

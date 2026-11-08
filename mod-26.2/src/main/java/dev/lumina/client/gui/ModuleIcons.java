@@ -39,8 +39,8 @@ final class ModuleIcons {
 		"waypoints", "weather_changer", "chunk_borders",
 		"chat", "tab_editor", "auto_text", "better_sounds", "inventory", "gui_scale", "client");
 	/**
-	 * Modules shown as an original item. At 32x32 it comes from Faithful 32x (faithfulpack.net, license in the module
-	 * folder); at 16x16 it is the game's own picture, with its file in textures/item.
+	 * Modules shown as an original item. At 32x32 it is Lumina's own drawing (tools/ItemIcons.java); at 16x16 it is
+	 * the game's own picture, with its file in textures/item.
 	 */
 	private static final Map<String, String> ORIGINAL_ITEMS = Map.of(
 		"coordinates", "compass_16",

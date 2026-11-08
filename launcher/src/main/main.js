@@ -426,6 +426,8 @@ if (!app.requestSingleInstanceLock() && !DEV_SCREENSHOT) {
     if (app.isPackaged && !DEV_SCREENSHOT) await backup.atVersionChange(app.getVersion()).catch(() => {});
     // dev screenshots only touch a test folder
     if (!DEV_SCREENSHOT || process.env.LUMINA_HOME) await profiles.shareAll().catch(() => {});
+    // the installer's privacy page may have switched Lumina Online off
+    if (!DEV_SCREENSHOT || process.env.LUMINA_HOME) await profiles.applyInstallOptions().catch(() => {});
     if (IS_MAC) {
       buildMacMenu();
       if (!app.isPackaged) app.dock.setIcon(path.join(__dirname, '..', '..', 'assets', 'icon.png'));
