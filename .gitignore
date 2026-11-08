@@ -1,0 +1,29 @@
+# tools downloaded by build.ps1
+/.tools/
+
+# secrets (GitHub token for publishing)
+/.secrets/
+
+# Lumina's online server is not part of the public repository
+/server/
+
+# build output and dev clients
+/mod*/.gradle/
+/mod*/build/
+/mod*/run/
+/launcher/node_modules/
+/launcher/dist/
+/launcher/resources/
+/launcher/build/release-notes.md
+*.log
+
+# icon working folders (hold Mojang reference textures that must not be published)
+/codex-icons/
+/codex-icons-32/
+
+# local notes, screenshots and leftovers
+/README.de.md
+/github-page/
+/launcher-*.png
+/fabric.mod.json
+/lumina.mixins.json

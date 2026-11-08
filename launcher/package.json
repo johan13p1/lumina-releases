@@ -1,0 +1,84 @@
+{
+  "name": "lumina-launcher",
+  "productName": "LuminaClient",
+  "version": "1.3.26",
+  "description": "LuminaClient - a clean, minimal and fast Minecraft client launcher.",
+  "author": "Lumina",
+  "license": "MIT",
+  "private": true,
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --x64"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9",
+    "msmc": "^5.0.5",
+    "yauzl": "^3.4.0"
+  },
+  "devDependencies": {
+    "electron": "^45.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "dev.lumina.launcher",
+    "productName": "LuminaClient",
+    "copyright": "Lumina",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/lumina-client.jar",
+        "to": "lumina-client.jar"
+      },
+      {
+        "from": "resources/lumina-client-26.2.jar",
+        "to": "lumina-client-26.2.jar"
+      },
+      {
+        "from": "resources/lumina-client-26.3.jar",
+        "to": "lumina-client-26.3.jar"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "executableName": "LuminaClient"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "LuminaClient",
+      "uninstallDisplayName": "LuminaClient",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "artifactName": "LuminaClient-Setup-${version}.${ext}",
+      "differentialPackage": false
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "johan13p1",
+        "repo": "lumina-releases",
+        "releaseType": "release"
+      }
+    ]
+  }
+}

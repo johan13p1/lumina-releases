@@ -1,5 +1,8 @@
 <h1 align="center">
-  <img src="assets/lumina-icon.png" width="56" height="56" align="center" alt="">&nbsp;Lumina
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/lumina-logo.png">
+    <img src=".github/assets/lumina-mark-dark.svg" width="60" height="60" align="center" alt="">
+  </picture>&nbsp;Lumina
 </h1>
 
 <p align="center">
@@ -12,7 +15,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/launcher.png" width="760" alt="The Lumina launcher">
+  <img src=".github/assets/launcher.png" width="760" alt="The Lumina launcher">
 </p>
 
 ## Features
@@ -28,7 +31,7 @@
 **In game**
 
 <p align="center">
-  <img src="assets/menu.png" width="760" alt="The Lumina menu">
+  <img src=".github/assets/menu.png" width="760" alt="The Lumina menu">
 </p>
 
 - One menu on <kbd>Right Shift</kbd> with around 40 features
@@ -51,17 +54,16 @@ The launcher keeps itself up to date. Your worlds, mods and settings stay.
 
 ## Open source
 
-Lumina is open source. The repository holds everything it is made of:
+Lumina is open source under the [MIT License](LICENSE).
 
 | Folder | What it is |
 | --- | --- |
 | `mod/`, `mod-26.2/`, `mod-26.3/` | The Fabric mod, one project per Minecraft version (Java) |
 | `launcher/` | The launcher (Electron) |
-| `server/` | The small Cloudflare Worker that shares capes and particle effects between Lumina players |
 
 `.\build.ps1` builds the three mods and the installer. On the first run it downloads JDK 21, JDK 25 and Node.js into `.tools\`. `.\build.ps1 -SkipInstaller` only builds the mods.
 
-Issues and pull requests are welcome. See [LICENSE](LICENSE) for the license.
+Issues and pull requests are welcome. Icons, fonts and other files by others keep their own licenses, see Credits.
 
 ## Privacy
 

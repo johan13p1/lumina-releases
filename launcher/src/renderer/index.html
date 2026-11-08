@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; connect-src 'none'" />
+  <title>LuminaClient</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="titlebar">
+      <div class="brand"><img class="brand-mark" src="../../assets/logo/lumina-mark.svg" alt="" draggable="false" /></div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="home">Home</button>
+        <button class="nav-item" data-page="mods">Mods</button>
+        <button class="nav-item" data-page="cosmetics">Cosmetics</button>
+        <button class="nav-item" data-page="settings">Settings</button>
+        <div class="nav-indicator"></div>
+      </nav>
+      <div class="titlebar-drag"></div>
+      <button class="account-chip" id="account-chip">
+        <img class="avatar" id="account-avatar" alt="" src="" />
+        <span class="account-text">
+          <span class="account-name" id="account-name">Not signed in</span>
+          <span class="account-type" id="account-type">Add account</span>
+        </span>
+        <i data-icon="chevron-down" class="chev"></i>
+      </button>
+      <div class="win-controls">
+        <button class="win-btn" data-win="minimize" title="Minimize"><i data-icon="minus"></i></button>
+        <button class="win-btn close" data-win="close" title="Close"><i data-icon="x"></i></button>
+      </div>
+    </header>
+
+    <div class="update-card" id="update-card" hidden>
+            <div class="update-head"><i data-icon="download" id="update-icon"></i><div><div class="update-title" id="update-title">Downloading update</div><div class="update-sub" id="update-sub"></div></div></div>
+            <div class="update-bar" id="update-bar"><span id="update-fill"></span></div>
+            <button class="btn btn-primary full update-restart" id="update-restart" hidden><i data-icon="rotate-cw"></i>Restart</button>
+          </div>
+
+    <main class="content">
+        <!-- HOME -->
+        <section class="page page-home active" data-page="home">
+          <div class="hero">
+            <div class="hero-mark"><img src="../../assets/logo/lumina-glass.png" alt="" draggable="false" /></div>
+            <div class="lobby" id="lobby">
+              <div class="lobby-floor"></div>
+              <div class="lobby-stage" id="lobby-stage"></div>
+            </div>
+            <div class="hero-content">
+              <div class="hero-brand">
+                <h1 class="hero-title">Lumina</h1>
+                <p class="hero-lead">Clean. Minimal. Fast.</p>
+              </div>
+              <div class="play-status" id="play-status">
+                <span class="stage" id="stage"></span>
+                <span class="stage-sub" id="stage-sub"></span>
+              </div>
+              <div class="play-row">
+              <button class="play-btn" id="play-btn">
+                <span class="play-fill" id="play-fill"></span>
+                <span class="play-label"><i data-icon="play" id="play-icon"></i><span id="play-text">Play</span></span>
+              </button>
+              <div class="extra-picker" id="extra-picker" hidden>
+                <button class="extra-btn" id="extra-btn" title="Play with another account">
+                  <i data-icon="user-plus" id="extra-icon"></i>
+                  <img class="extra-face" id="extra-face" alt="" hidden>
+                  <span class="extra-stop"><i data-icon="square"></i></span>
+                </button>
+                <div class="version-menu extra-menu" id="extra-menu" hidden></div>
+              </div>
+              <div class="version-picker" id="version-picker">
+                <button class="version-btn" id="version-btn" title="Choose version and profile">
+                  <span class="version-text"><span class="version-name" id="version-name">Lumina</span><span class="version-sub" id="version-sub">Lumina 1.21.11</span></span>
+                  <i data-icon="chevrons-up-down"></i>
+                </button>
+                <div class="version-menu" id="version-menu" hidden></div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="console" id="console">
+            <div class="console-head">
+              <div><i data-icon="terminal"></i> Game log</div>
+              <div class="console-actions">
+                <button class="btn-ghost small" id="console-copy"><i data-icon="copy"></i>Copy</button>
+                <button class="btn-ghost small" id="console-folder"><i data-icon="folder-open"></i>Logs</button>
+                <button class="btn-ghost small" id="console-toggle"><i data-icon="chevron-down"></i></button>
+              </div>
+            </div>
+            <pre class="console-body" id="console-body"></pre>
+          </div>
+        </section>
+
+        <!-- MODS -->
+        <section class="page page-mods" data-page="mods">
+          <div class="page-header">
+            <div>
+              <h2 id="mod-title">Mods</h2>
+              <p class="muted" id="mod-count"></p>
+            </div>
+            <div class="header-actions">
+              <div class="version-picker mod-picker" id="mod-picker">
+                <button class="mod-picker-btn" id="mod-picker-btn" title="Choose version and profile"></button>
+                <div class="version-menu down" id="mod-picker-menu" hidden></div>
+              </div>
+            <div class="tabs" id="mod-tabs">
+              <button class="tab active" data-tab="installed">Installed</button>
+              <button class="tab" data-tab="modrinth">Modrinth</button>
+              <button class="tab" data-tab="shaders">Shaders</button>
+              <div class="tab-indicator"></div>
+            </div>
+            </div>
+          </div>
+          <div class="toolbar hidden" id="mod-toolbar">
+            <div class="search">
+              <i data-icon="search"></i>
+              <input id="mod-search" type="text" placeholder="Search mods" spellcheck="false" />
+            </div>
+            <div class="select">
+              <select id="mod-sort">
+                <option value="relevance">Relevance</option>
+                <option value="downloads">Downloads</option>
+                <option value="updated">Updated</option>
+                <option value="newest">Newest</option>
+              </select>
+              <i data-icon="chevron-down"></i>
+            </div>
+          </div>
+          <div class="mod-scroll" id="mod-scroll">
+            <div class="mod-list" id="mod-list"></div>
+            <div class="list-footer" id="list-footer"></div>
+          </div>
+        </section>
+
+        <!-- COSMETICS -->
+        <section class="page page-cosmetics" data-page="cosmetics">
+          <div class="page-header">
+            <div>
+              <h2>Cosmetics</h2>
+            </div>
+            <div class="header-actions">
+              <div class="tabs" id="cos-tabs">
+                <button class="tab active" data-tab="capes">Capes</button>
+                <button class="tab" data-tab="effects">Effects</button>
+                <div class="tab-indicator"></div>
+              </div>
+            </div>
+          </div>
+          <div class="cos-body">
+            <div class="cos-preview" id="cos-preview">
+              <div class="cos-floor"></div>
+              <div class="cos-stage" id="cos-stage"></div>
+              <div class="cos-caption">
+                <div class="cos-name" id="cos-name">None</div>
+              </div>
+            </div>
+            <div class="cos-main">
+              <div class="cos-notice" id="cos-notice" hidden><i data-icon="info"></i><span>Minecraft is running. Pick cosmetics in the game (<span class="mac-only">right ⇧</span><span class="win-only">Right Shift</span> → Cosmetics)</span></div>
+              <div class="cos-scroll" id="cos-scroll">
+                <div class="cos-grid" id="cos-grid"></div>
+              </div>
+              <div class="cos-footer">
+                <button class="btn" id="cos-folder"><i data-icon="folder-open"></i>Open folder</button>
+              </div>
+            </div>
+            <div class="cos-drop" id="cos-drop" hidden><div><i data-icon="arrow-down-to-line"></i><span>Drop to add the cape</span></div></div>
+          </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section class="page page-settings" data-page="settings">
+          <div class="page-header">
+            <div>
+              <h2>Settings</h2>
+            </div>
+          </div>
+          <div class="settings-scroll">
+            <div class="settings-group">
+              <div class="group-title">Updates</div>
+              <div class="setting-card">
+                <div class="row">
+                  <div class="row-text"><div class="row-title" id="upd-version">LuminaClient</div><div class="row-sub" id="upd-status"></div></div>
+                  <button class="btn" id="upd-action"><i data-icon="refresh-cw"></i><span>Check for updates</span></button>
+                </div>
+                <div class="row notes-row" id="upd-notes-row" hidden>
+                  <div class="row-text"><div class="row-title" id="upd-notes-title">New in this version</div><div class="update-notes" id="upd-notes"></div></div>
+                </div>
+                <div class="row mac-only">
+                  <div class="row-text"><div class="row-title">Update folder</div></div>
+                  <button class="btn" id="upd-feed"><i data-icon="folder-open"></i>Show in Finder</button>
+                </div>
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Backups</div><div class="row-sub" id="backup-sub"></div></div>
+                  <div class="row-buttons">
+                    <button class="btn" id="backup-now"><i data-icon="archive"></i>Back up now</button>
+                    <button class="btn" id="backup-restore"><i data-icon="history"></i>Restore</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="group-title">Game</div>
+              <div class="setting-card">
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Memory</div></div>
+                  <div class="row-control range-control">
+                    <input type="range" id="set-memory" min="1024" max="16384" step="512" />
+                    <span class="range-value" id="set-memory-value">4 GB</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Window size</div></div>
+                  <div class="row-control res-control">
+                    <input type="number" id="set-width" min="640" class="input small" />
+                    <span class="muted">×</span>
+                    <input type="number" id="set-height" min="480" class="input small" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Fullscreen</div></div>
+                  <label class="switch"><input type="checkbox" id="set-fullscreen" /><span></span></label>
+                </div>
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Join a server on launch</div></div>
+                  <input type="text" id="set-autojoin" class="input" placeholder="Server address" spellcheck="false" />
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="group-title">Mods and integrations</div>
+              <div class="setting-card">
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Shader support (Iris)</div></div>
+                  <label class="switch"><input type="checkbox" id="set-shaders" /><span></span></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="group-title">Java</div>
+              <div class="setting-card">
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Java path</div></div>
+                  <input type="text" id="set-java" class="input wide" placeholder="Automatic" spellcheck="false" />
+                </div>
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Extra JVM arguments</div></div>
+                  <input type="text" id="set-jvm" class="input wide" placeholder="-XX:+UseZGC" spellcheck="false" />
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="group-title">Launcher</div>
+              <div class="setting-card">
+                <div class="row">
+                  <div class="row-text"><div class="row-title">After launch</div></div>
+                  <div class="select">
+                    <select id="set-after">
+                      <option value="close">Hide</option>
+                      <option value="minimize" id="set-after-minimize">Keep in Dock</option>
+                      <option value="keep">Keep open</option>
+                    </select>
+                    <i data-icon="chevron-down"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="row-text"><div class="row-title">Show game log</div></div>
+                  <label class="switch"><input type="checkbox" id="set-console" /><span></span></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="group-title">Folders</div>
+              <div class="folder-grid">
+                <button class="folder-btn" data-folder="game"><i data-icon="folder-open"></i>Game folder</button>
+                <button class="folder-btn" data-folder="mods"><i data-icon="puzzle"></i>Mods</button>
+                <button class="folder-btn" data-folder="resourcepacks"><i data-icon="layers"></i>Resource packs</button>
+                <button class="folder-btn" data-folder="shaderpacks"><i data-icon="sparkles"></i>Shader packs</button>
+                <button class="folder-btn" data-folder="screenshots"><i data-icon="image"></i>Screenshots</button>
+                <button class="folder-btn" data-folder="logs"><i data-icon="terminal"></i>Logs</button>
+              </div>
+            </div>
+
+            <div class="about" id="about"></div>
+          </div>
+        </section>
+      </main>
+
+    <!-- FIRST START -->
+    <section class="welcome" id="welcome" hidden>
+      <div class="welcome-text">
+        <h1>Welcome to Lumina</h1>
+        <p>Sign in with the Microsoft account that owns Minecraft.</p>
+        <div class="welcome-actions">
+          <button class="btn btn-primary welcome-signin" id="welcome-signin"><svg class="ms-logo" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg><span id="welcome-signin-text">Sign in with Microsoft</span></button>
+          <button class="welcome-skip" id="welcome-skip">Skip for now</button>
+        </div>
+      </div>
+      <img class="welcome-mark" src="../../assets/logo/lumina-glass.png" alt="" draggable="false" />
+    </section>
+
+    <!-- ACCOUNTS -->
+    <div class="modal" id="accounts-modal" hidden>
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>Accounts</h3>
+          <button class="icon-btn" data-close><i data-icon="x"></i></button>
+        </div>
+        <div class="account-list" id="account-list"></div>
+        <button class="btn btn-primary full" id="add-microsoft"><svg class="ms-logo" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>Sign in with Microsoft</button>
+        <div class="offline-row" id="offline-row">
+          <input type="text" class="input" id="offline-name" placeholder="Offline name (singleplayer only)" maxlength="16" spellcheck="false" />
+          <button class="btn" id="add-offline"><i data-icon="plus"></i>Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW PROFILE -->
+    <div class="modal" id="profile-modal" hidden>
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>New profile</h3>
+          <button class="icon-btn" data-close><i data-icon="x"></i></button>
+        </div>
+        <label class="field">
+          <span class="field-label">Name</span>
+          <input type="text" class="input" id="profile-name" placeholder="PvP or Survival, for example" maxlength="32" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span class="field-label">Version</span>
+          <span class="select full"><select id="profile-version"></select><i data-icon="chevron-down"></i></span>
+        </label>
+        <button class="btn btn-primary full" id="profile-create"><i data-icon="plus"></i>Create profile</button>
+      </div>
+    </div>
+
+    <!-- INSTALL TARGET -->
+    <div class="modal" id="target-modal" hidden>
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3 id="target-title">Install</h3>
+          <button class="icon-btn" data-close><i data-icon="x"></i></button>
+        </div>
+        <div class="target-list" id="target-list"></div>
+      </div>
+    </div>
+
+    <!-- MOVE MODS TO ANOTHER VERSION -->
+    <div class="modal" id="migrate-modal" hidden>
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card migrate-card">
+        <div class="modal-head">
+          <h3 id="migrate-title">Move mods</h3>
+          <button class="icon-btn" data-close><i data-icon="x"></i></button>
+        </div>
+        <div id="migrate-body"></div>
+      </div>
+    </div>
+
+    <!-- RESTORE A BACKUP -->
+    <div class="modal" id="backup-modal" hidden>
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card backup-card">
+        <div class="modal-head">
+          <h3>Restore a backup</h3>
+          <button class="icon-btn" data-close><i data-icon="x"></i></button>
+        </div>
+        <div class="target-list backup-list" id="backup-list"></div>
+        <button class="btn full" data-folder="backups"><i data-icon="folder-open"></i><span class="mac-only">Show backups in Finder</span><span class="win-only">Open backups folder</span></button>
+      </div>
+    </div>
+
+    <!-- THE GAME CRASHED -->
+    <div class="modal" id="crash-modal" hidden>
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card crash-card">
+        <div class="modal-head">
+          <h3>Minecraft crashed</h3>
+          <button class="icon-btn" data-close><i data-icon="x"></i></button>
+        </div>
+        <p class="crash-error" id="crash-error" hidden></p>
+        <pre class="console-body crash-log" id="crash-log" hidden></pre>
+        <div class="crash-actions">
+          <button class="btn" id="crash-view"><i data-icon="terminal"></i><span>View log</span></button>
+          <button class="btn" id="crash-copy"><i data-icon="copy"></i>Copy log</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toasts" id="toasts"></div>
+  </div>
+
+  <script src="vendor/skinview3d.bundle.js"></script>
+  <script src="particles.js"></script>
+  <script src="lobby.js"></script>
+  <script src="icons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

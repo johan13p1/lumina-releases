@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "lumina",
+	"version": "${version}",
+	"name": "Lumina Client",
+	"description": "A clean, minimal and fast Minecraft client.",
+	"authors": ["Lumina"],
+	"contributors": ["Faithful 32x, https://faithfulpack.net/ (menu icons for Coordinates, Zoom and Name Tags)"],
+	"license": "MIT",
+	"icon": "assets/lumina/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"preLaunch": ["dev.lumina.client.LuminaPreLaunch"],
+		"client": ["dev.lumina.client.Lumina"]
+	},
+	"mixins": ["lumina.mixins.json"],
+	"accessWidener": "lumina.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

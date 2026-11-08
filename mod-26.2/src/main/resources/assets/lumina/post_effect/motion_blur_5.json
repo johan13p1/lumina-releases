@@ -1,0 +1,40 @@
+{
+    "targets": {
+        "lumina:accumulated": { "persistent": true },
+        "lumina:blended": {}
+    },
+    "passes": [
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "lumina:post/motion_blur",
+            "inputs": [
+                { "sampler_name": "In", "target": "minecraft:main" },
+                { "sampler_name": "Prev", "target": "lumina:accumulated" }
+            ],
+            "output": "lumina:blended",
+            "uniforms": {
+                "MotionBlurConfig": [
+                    { "name": "BlendFactor", "type": "float", "value": 0.575 }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "minecraft:post/blit",
+            "inputs": [ { "sampler_name": "In", "target": "lumina:blended" } ],
+            "output": "lumina:accumulated",
+            "uniforms": {
+                "BlitConfig": [ { "name": "ColorModulate", "type": "vec4", "value": [ 1.0, 1.0, 1.0, 1.0 ] } ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "minecraft:post/blit",
+            "inputs": [ { "sampler_name": "In", "target": "lumina:blended" } ],
+            "output": "minecraft:main",
+            "uniforms": {
+                "BlitConfig": [ { "name": "ColorModulate", "type": "vec4", "value": [ 1.0, 1.0, 1.0, 1.0 ] } ]
+            }
+        }
+    ]
+}

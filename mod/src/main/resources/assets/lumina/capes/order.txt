@@ -1,0 +1,11 @@
+# Order of the built-in capes on the Cosmetics pages (game and launcher). One file name per line;
+# capes that are not listed follow alphabetically.
+Lumina-Violet.apng
+Lumina-Cyan.apng
+Lumina-Petrol.apng
+Star-Planet.apng
+Thunder-Lightning.apng
+Celestial-Event-Astronomy.apng
+Minecon-Enderman.png
+Glass.png
+Cat-Pet.png
