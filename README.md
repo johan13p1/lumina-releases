@@ -1,8 +1,8 @@
 <h1 align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/lumina-logo.png">
-    <img src=".github/assets/lumina-mark-dark.svg" width="60" height="60" align="center" alt="">
-  </picture>&nbsp;Lumina
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/header-dark.png">
+    <img src=".github/assets/header-light.png" width="270" height="70" alt="Lumina">
+  </picture>
 </h1>
 
 <p align="center">
