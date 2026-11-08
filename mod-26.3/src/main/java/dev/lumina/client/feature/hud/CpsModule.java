@@ -9,7 +9,7 @@ public final class CpsModule extends TextHudModule {
 	private final BoolSetting showRight;
 
 	public CpsModule() {
-		super("cps", "CPS", "Shows your clicks per second", Icons.MOUSE_CLICK, true, AnchorX.LEFT, AnchorY.TOP, 4, 22);
+		super("cps", "CPS", "Shows your clicks per second", Icons.MOUSE_CLICK, false, AnchorX.LEFT, AnchorY.TOP, 4, 22);
 		showRight = add(new BoolSetting("show_right", "Show Right Clicks", true));
 	}
 

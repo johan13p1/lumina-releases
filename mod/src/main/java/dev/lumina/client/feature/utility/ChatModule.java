@@ -25,7 +25,7 @@ public final class ChatModule extends Module {
 
 	public ChatModule() {
 		super("chat", "Chat", "Background, timestamps, stacking and history", Category.UTILITY, Icons.MESSAGE, true);
-		background = add(new NumberSetting("background", "Background Opacity", 0.35, 0, 1, 0.05));
+		background = add(new NumberSetting("background", "Background Opacity", 0, 0, 1, 0.05));
 		timestamps = add(new ModeSetting("timestamps", "Timestamps", "Off", "Off", "HH:mm", "HH:mm:ss", "h:mm a"));
 		timestampColor = add(new ColorSetting("timestamp_color", "Timestamp Color", 0xFF8E8E96, false).visibleWhen(() -> !timestamps.is("Off")));
 		stack = add(new BoolSetting("stack", "Stack Repeated Messages", true));

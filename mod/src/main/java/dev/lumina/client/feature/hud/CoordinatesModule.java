@@ -25,7 +25,7 @@ public final class CoordinatesModule extends HudModule {
 	private final HudStyle style;
 
 	public CoordinatesModule() {
-		super("coordinates", "Coordinates", "Shows your position and facing", Icons.COMPASS, true, AnchorX.LEFT, AnchorY.TOP, 4, 40);
+		super("coordinates", "Coordinates", "Shows your position and facing", Icons.COMPASS, false, AnchorX.LEFT, AnchorY.TOP, 4, 40);
 		layout = add(new ModeSetting("layout", "Layout", "Vertical", "Vertical", "Horizontal"));
 		direction = add(new BoolSetting("direction", "Show Direction", true));
 		biome = add(new BoolSetting("biome", "Show Biome", false));

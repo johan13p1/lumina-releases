@@ -5,7 +5,7 @@ import dev.lumina.client.render.Icons;
 
 public final class FpsModule extends TextHudModule {
 	public FpsModule() {
-		super("fps", "FPS", "Shows your frames per second", Icons.GAUGE, true, AnchorX.LEFT, AnchorY.TOP, 4, 4);
+		super("fps", "FPS", "Shows your frames per second", Icons.GAUGE, false, AnchorX.LEFT, AnchorY.TOP, 4, 4);
 	}
 
 	@Override

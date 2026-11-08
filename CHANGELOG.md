@@ -4,6 +4,10 @@
 
 Die zweite Zahl steigt nur bei großen Updates, sonst zählt die dritte hoch. 1.4.0 bis 1.8.4 heißen deshalb jetzt 1.3.1 bis 1.3.21.
 
+## 1.3.27
+
+New installs start cleaner: FPS, CPS and Coordinates are off, and the chat has no background. Your own settings stay as they are.
+
 ## 1.3.26
 
 The first public release of Lumina for Minecraft 1.21.11, 26.2 and 26.3.
