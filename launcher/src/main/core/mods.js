@@ -24,7 +24,6 @@ const CORE_MODS = [
   { id: 'moreculling', project: '51shyZVL', name: 'More Culling', required: true, group: 'performance' },
   { id: 'badoptimizations', project: 'g96Z4WVZ', name: 'BadOptimizations', required: true, group: 'performance' },
   { id: 'dynamic_fps', project: 'LQ3K71Q1', name: 'Dynamic FPS', required: true, group: 'performance' },
-  { id: 'krypton', project: 'fQEb0iXm', name: 'Krypton', required: true, group: 'performance' },
   { id: 'scalablelux', project: 'Ps1zyz6x', name: 'ScalableLux', required: true, group: 'performance' },
   { id: 'cullleaves', project: 'GNxdLCoP', name: 'Cull Leaves', required: true, group: 'performance' },
   { id: 'sodium-extra', project: 'PtjYWJkn', name: 'Sodium Extra', required: true, group: 'performance' },

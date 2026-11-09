@@ -18,6 +18,7 @@ contextBridge.exposeInMainWorld('lumina', {
     info: () => invoke('app:info'),
     openExternal: (url) => invoke('app:openExternal', url),
     openFolder: (which, profileId) => invoke('app:openFolder', which, profileId),
+    online: () => invoke('app:online'),
   },
   update: {
     status: () => invoke('update:status'),

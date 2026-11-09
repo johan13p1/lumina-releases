@@ -16,6 +16,7 @@ const backup = require('./core/backup');
 const skin = require('./core/skin');
 const cosmetics = require('./core/cosmetics');
 const shaders = require('./core/shaders');
+const online = require('./core/online');
 
 const DEV_SCREENSHOT = process.argv.find((a) => a.startsWith('--screenshot='));
 const DEV_PAGE = (process.argv.find((a) => a.startsWith('--page=')) || '').slice(7);
@@ -224,6 +225,7 @@ function registerIpc() {
     return null;
   });
   handle('app:openFolder', (which, profileId) => openFolder(which, profileId));
+  handle('app:online', () => online.count());
 
   handle('update:status', () => updater.get());
   handle('update:check', () => updater.check());

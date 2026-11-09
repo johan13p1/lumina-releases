@@ -117,6 +117,10 @@ final class DevHooks {
 					mc.setScreen(new net.minecraft.client.gui.screens.options.OptionsScreen(mc.screen, mc.options));
 					wait = 20;
 				});
+				case "multiplayer" -> steps.add(() -> {
+					mc.setScreen(new net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen(new net.minecraft.client.gui.screens.TitleScreen()));
+					wait = 60;
+				});
 				case "packs" -> steps.add(() -> {
 					mc.setScreen(new net.minecraft.client.gui.screens.packs.PackSelectionScreen(mc.getResourcePackRepository(), repo -> {}, mc.getResourcePackDirectory(), net.minecraft.network.chat.Component.translatable("resourcePack.title")));
 					wait = 40;

@@ -2020,6 +2020,37 @@ function setupUpdates() {
 }
 
 // ---------------------------------------------------------------------------
+// online count
+// ---------------------------------------------------------------------------
+
+// The number only changes when a game reports (every 10 minutes), so every 30 s is plenty. A hidden
+// launcher (for example while you play) doesn't ask. With nobody online the number is not shown.
+const ONLINE_EVERY = 30 * 1000;
+let onlineAskedAt = 0;
+
+async function refreshOnline() {
+  if (document.visibilityState !== 'visible') return;
+  onlineAskedAt = Date.now();
+  let n = null;
+  try {
+    n = await call(api.app.online());
+  } catch {
+    n = null;
+  }
+  const show = Number.isInteger(n) && n > 0;
+  if (show) $('#online-n').textContent = n.toLocaleString('en-US');
+  $('#online-count').hidden = !show;
+}
+
+function setupOnlineCount() {
+  refreshOnline();
+  setInterval(refreshOnline, ONLINE_EVERY);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && Date.now() - onlineAskedAt >= ONLINE_EVERY) refreshOnline();
+  });
+}
+
+// ---------------------------------------------------------------------------
 // boot
 // ---------------------------------------------------------------------------
 
@@ -2032,6 +2063,7 @@ async function boot() {
   setProfiles(profiles);
   setupLobby();
   renderAccountChip();
+  setupOnlineCount();
   setupAccounts();
   setupWelcome();
   setupSkinRefresh();

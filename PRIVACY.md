@@ -13,6 +13,8 @@ Lumina Online shows your cape, particle effect and the Lumina mark to other Lumi
 
 The server stores your Minecraft name, UUID, what you wear and when you last played. It stores no IP addresses and keeps no logs.
 
+While its window is open, the launcher asks Lumina's server every 30 seconds how many players are online right now, to show that number at the top. This request contains nothing about you.
+
 **You can turn it off**: in the installer, or in game under Right Shift > Lumina Settings > Lumina Online. When it is off, nothing is sent to Lumina's server.
 
 ## Other services

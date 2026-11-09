@@ -64,6 +64,7 @@ public final class Lumina implements ClientModInitializer {
 		ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
 			Fonts.init();
 			modules.ready();
+			dev.lumina.client.feature.world.DefaultServers.addMissing(client);
 			dev.lumina.client.feature.cosmetics.WaveyCapesBridge.install();
 			if (DEV) DevHooks.start();
 		});
